@@ -55,3 +55,4 @@ class Pedido:
                 return "Verifique o campo entrega e tente novamente"
             ped = Pedido(idp, cli, vtp, ent, Pedido.calculafrete(lista, entrega))
         return ped
+    
