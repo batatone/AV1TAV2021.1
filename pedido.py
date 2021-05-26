@@ -2,6 +2,7 @@ from itenspedido import ItemPedido
 from cliente import Cliente
 from entrega import Entrega
 import geopy
+from geopy import distance
 
 class Pedido:
     def __init__(self, id, idcliente, vt, identrega, frete):
@@ -13,13 +14,13 @@ class Pedido:
 
     def calculafrete(lista, entrega):
         if (type(lista) == list):
-            if type((entrega) == Entrega):
+            if (type(entrega) == Entrega):
+                qtd = 0
                 envio = (entrega.elat, entrega.elon)
                 destino = (entrega.dlat, entrega.dlon)
                 dist = geopy.distance.distance(envio, destino).km
                 for x in lista:
                     if (type(x) != ItemPedido):
-                        del lista[lista.index(x)]
                         continue
                     else:
                         qtd = qtd + x.quantidade
@@ -29,30 +30,29 @@ class Pedido:
                 dist = dist / 100
                 if (dist < 1):
                     dist = 1
-                frete = dist + qtd
+                frete = dist * qtd
             else:
-                return "Verifique o campo entrega e tente novamente"
+                return 0
         else:
-            return "Verifique se o objeto inserido é uma lista e tente novamente"
+            return 0
         return frete
 
     def fechar(lista, cliente, entrega):
+        vtp = 0
         if (type(lista) == list):
             for x in lista:
                 if (type(x) != ItemPedido):
-                    del lista[lista.index(x)]
                     continue
                 else:
                     vtp = vtp + x.preco
-            idp = (cliente.id * 1000000) + entrega.id
-            if (type(cliente) == Cliente):
+            if (type(cliente) == Cliente and type(entrega) == Entrega):
                 cli = cliente.id
-            else:
-                return "Verifique o campo cliente e tente novamente"
-            if (type(entrega) == Entrega):
+                idp = (cliente.id * 1000000) + entrega.id
                 ent = entrega.id
             else:
-                return "Verifique o campo entrega e tente novamente"
+                return "Verifique os campos inseridos e tente novamente"
+
             ped = Pedido(idp, cli, vtp, ent, Pedido.calculafrete(lista, entrega))
+        else:
+            return "Verifique os itens do pedido e tente novamente"
         return ped
-    

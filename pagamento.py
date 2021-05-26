@@ -7,8 +7,8 @@ class Pagamento:
         self.vp = float(vp)
         self.frete = float(frete)
 
-    def fazer(self, pedido):
-        if type((pedido) == Pedido):
+    def fazer(pedido):
+        if (type(pedido) == Pedido):
             vp = pedido.vt + pedido.frete
             frete = pedido.frete
             idp = pedido.id * 10 + 1

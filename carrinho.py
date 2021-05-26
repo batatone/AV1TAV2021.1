@@ -29,7 +29,7 @@ class Carrinho:
                 car = Carrinho(carrinho.id, carrinho.datac, carrinho.vt, carrinho.frete, carrinho.freteq, carrinho.fretes)
             return car
         else:
-            return "Verifique os itens inseridos e tente novamente"
+            return carrinho
 
     def simulafrete(carrinho):
         if (type(carrinho) == Carrinho):
